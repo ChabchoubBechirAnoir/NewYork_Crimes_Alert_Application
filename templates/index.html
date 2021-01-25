@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e9b7f5ba69e94b589746dc1898061e42 {
+                    position: relative;
+                    width: 600.0px;
+                    height: 800.0px;
+                }
+            </style>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css"/>
+</head>
+<body>    
+            <div class="container">
+            <form method="POST" action="">
+
+                <input type="hidden" name="coords" id="coords" size="0">
+                
+                <label for="name">Name:</label>
+                <input type="text" name="name" value="Your name">
+                
+                <label for="age">Age:</label>
+                <input type="number" name="age" value="Your age">
+                
+                <label for="sexe">SEXE:</label>
+                <select name="sexe" id="sexe">
+                    <option value="F">Female</option>
+                    <option value="M">Male</option>
+                    <option value="D">Company</option>
+                  </select>
+                  <br><br>
+                
+                <label for="race">Race:</label>
+                <select name="Race" id="Race">
+                    <option value="a">AMERICAN INDIAN/ALASKAN NATIVE</option>
+                    <option value="b">ASIAN / PACIFIC ISLANDER</option>
+                    <option value="c">BLACK</option>
+                    <option value="d">BLACK HISPANIC</option>
+                    <option value="e">UNKNOWN</option>
+                    <option value="f">WHITE</option>
+                    <option value="g">WHITE HISPANIC</option>
+                </select>
+                <br><br> 
+                
+                <label for="name">Date & Time:</label>
+                <input type="datetime-local" id="trip_time"
+                name="trip_time" value="2021-01-01T00:00"
+                min="2020-12-07T00:00" max="2030-06-14T00:00">               
+                
+                <input type="submit" data-target="#editModal" value="Go to this area">
+            </form>
+            <a>You are going to this place : {{coords}}</a>
+            <div class="folium-map" id="map_e9b7f5ba69e94b589746dc1898061e42" ></div>
+
+        </div>
+
+        </body>
+
+<script>    
+    
+            var map_e9b7f5ba69e94b589746dc1898061e42 = L.map(
+                "map_e9b7f5ba69e94b589746dc1898061e42",
+                {
+                    center: [40.712784, -74.005941],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 14,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+            var tile_layer_7c35ed634adc4429b46d7a152c7b5e7b = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 16, "maxZoom": 16, "minZoom": 12, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e9b7f5ba69e94b589746dc1898061e42);
+        
+    
+            var options = {
+              position: "topleft",
+              draw: {"circle": false, "circlemarker": false, "marker": true, "polygon": false, "polyline": false, "rectangle": false},
+              edit: {"edit": false},
+            }
+            // FeatureGroup is to store editable layers.
+            var drawnItems = new L.featureGroup().addTo(
+                map_e9b7f5ba69e94b589746dc1898061e42
+            );
+            options.edit.featureGroup = drawnItems;
+            var draw_control_779fae713863423394a0a293dd60db6d = new L.Control.Draw(
+                options
+            ).addTo( map_e9b7f5ba69e94b589746dc1898061e42 );
+            
+            map_e9b7f5ba69e94b589746dc1898061e42.on(L.Draw.Event.CREATED, function(e) {
+                var layer = e.layer,
+                    type = e.layerType;
+                var coords = JSON.stringify(layer.toGeoJSON());
+                document.getElementById("coords").value = coords;
+
+                layer.on('click', function() {
+                    document.getElementById("coords").value = coords;
+                    console.log(coords);
+                });
+                drawnItems.addLayer(layer);
+             });
+            map_e9b7f5ba69e94b589746dc1898061e42.on('draw:created', function(e) {
+                drawnItems.addLayer(e.layer);
+            });
+            
+        
+</script>
