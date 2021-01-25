@@ -20,4 +20,4 @@ So, Entering this specific data ( look below )
 
 You will get this result : 
 
-![Screenshot](result.png)
+![Screenshot](predict.png)
